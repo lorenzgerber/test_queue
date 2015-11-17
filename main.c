@@ -9,19 +9,22 @@
 
 // Axiome 1
 void testForEmtpyQueue() {
+    printf("Axiome 1\nTesting for empty queue...");
     queue *que = queue_empty();
     queue_setMemHandler(que, free);
 
     if (queue_isEmpty(que)){
-        printf("TRUE, queue is empty\n\n");
+        printf("...pass\n\n");
         queue_free(que);
     } else {
+        printf("...fail\n\n");
         exit(1);
     }
 }
 
 // Axiome 2
 void testQueueNotEmptyOnEnque(){
+    printf("Axiome 2\nTesting whether queue not empty after enqueue...");
     queue *que = queue_empty();
     queue_setMemHandler(que, free);
 
@@ -30,15 +33,17 @@ void testQueueNotEmptyOnEnque(){
     *value = val;
     queue_enqueue(que, value);
     if ( !queue_isEmpty(que)){
-        printf("TRUE, queue is NOT EMPTY\n\n");
+        printf("...pass\n\n");
         queue_free(que);
     } else {
+        printf("...fail\n\n");
         exit(1);
     }
 }
 
 // Axiome 3
 void testQueueEmptyOnEnqueueDequeue(){
+    printf("Axiome 3\nTesting whether empty queue is empty again after enqueue/dequeue");
     queue *que = queue_empty();
     queue_setMemHandler(que, free);
 
@@ -48,9 +53,10 @@ void testQueueEmptyOnEnqueueDequeue(){
     queue_enqueue (que, value);
     queue_dequeue (que);
     if ( queue_isEmpty(que)){
-        printf("TRUE, queue EMPTY\n\n");
+        printf("...pass\n\n");
         queue_free(que);
     } else {
+        printf("...fail\n\n");
         exit(1);
     }
 }
@@ -58,7 +64,7 @@ void testQueueEmptyOnEnqueueDequeue(){
 
 // Axiome 4
 void testQueueCommutativeEnDeQueue(){
-
+    printf("Axiome 4\nTesting commutative property of enqueue/dequeue");
     // construct two identical empty queues: que1 and que2
     queue *que1 = queue_empty();
     queue_setMemHandler(que1, free);
@@ -82,10 +88,11 @@ void testQueueCommutativeEnDeQueue(){
     queue_enqueue(que2, initial2);
 
     // Check pre-condition, queue is not empty
-    printf("Check pre-condition, queue NOT empty\n");
+    //printf("Check pre-condition, queue NOT empty\n");
     if(!queue_isEmpty(que1) && !queue_isEmpty(que2)){
-        printf("Queue is NOT empty\n");
+        //printf("...pass\n\n");
     } else {
+        printf("...fail\n\n");
         exit(1);
     }
 
@@ -100,11 +107,12 @@ void testQueueCommutativeEnDeQueue(){
     // check the commutative property of enqueue and dequeue
     // by comparing the front value of que1 and que2
     if (*(int*) queue_front(que1) == *(int*) queue_front(que2)){
-        printf("Queues are the same\n\n");
+        printf("...pass\n\n");
         queue_free(que1);
         queue_free(que2);
 
     } else {
+        printf("...fail\n\n");
         exit (1);
     }
 
@@ -112,6 +120,7 @@ void testQueueCommutativeEnDeQueue(){
 
 // Axiome 5
 void testQueueEnqueueFrontOnEmpty(){
+    printf("Axiome 5\nTesting Enqueue/Front on an empty Queue returns value");
     queue *que = queue_empty();
     queue_setMemHandler(que, free);
 
@@ -120,9 +129,10 @@ void testQueueEnqueueFrontOnEmpty(){
     *value = val;
     queue_enqueue (que, value);
     if (*(int*) queue_front(que) == val){
-        printf("Front Queue is equal to val\n\n");
+        printf("...pass\n\n");
         queue_free(que);
     } else {
+        printf("...fail\n\n");
         exit (1);
     }
 
@@ -130,7 +140,7 @@ void testQueueEnqueueFrontOnEmpty(){
 
 // Axiome 6
 void testQueueEnqueueFrontOnNonEmpty(){
-
+    printf("Axiome 6\nTesting Enqueue/Front on non-empty Queue is equal Front on queue");
 
     // construct two identical empty queues: que1 and que2
     queue *que1 = queue_empty();
@@ -158,10 +168,11 @@ void testQueueEnqueueFrontOnNonEmpty(){
     // actual test
     queue_enqueue(que1, value1);
     if ( *(int*) queue_front(que1) == *(int*) queue_front(que2)) {
-        printf("Front on non-empty is equal to Enqueue, Front on the same non-empty queue\n\n");
+        printf("...pass\n\n");
         queue_free(que1);
         queue_free(que2);
     } else {
+        printf("...fail\n\n");
         exit (1);
     }
 }
@@ -169,25 +180,12 @@ void testQueueEnqueueFrontOnNonEmpty(){
 
 int main (void){
 
-    //int out;
-    printf("Axiome 1\nTesting for empty queue...\n");
+    //testing data type queue
     testForEmtpyQueue();
-
-    printf("Axiome 2\nTesting whether queue not empty after enqueue...\n");
     testQueueNotEmptyOnEnque();
-
-    printf("Axiome 3\nTesting whether queue is empty after enqueue/dequeue\n");
     testQueueEmptyOnEnqueueDequeue();
-
-    printf("Axiome 4\nTesting commutative property of en/dequeue\n");
     testQueueCommutativeEnDeQueue();
-
-    printf("Axiome 5\nTesting Enqueue/Front on an empty Queue returns value\n");
     testQueueEnqueueFrontOnEmpty();
-
-    printf("Axiome 6\nTesting Enqueue/Front on non-empty Queue is equal Front on queue\n");
     testQueueEnqueueFrontOnNonEmpty();
-
-
     return 0;
 }
