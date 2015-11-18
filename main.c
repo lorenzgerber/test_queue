@@ -18,6 +18,7 @@ void testForEmtpyQueue() {
         queue_free(que);
     } else {
         printf("...fail\n\n");
+        queue_free(que);
         exit(1);
     }
 }
@@ -37,6 +38,8 @@ void testQueueNotEmptyOnEnque(){
         queue_free(que);
     } else {
         printf("...fail\n\n");
+        free(value);
+        queue_free(que);
         exit(1);
     }
 }
@@ -57,6 +60,7 @@ void testQueueEmptyOnEnqueueDequeue(){
         queue_free(que);
     } else {
         printf("...fail\n\n");
+        queue_free(que);
         exit(1);
     }
 }
@@ -64,7 +68,7 @@ void testQueueEmptyOnEnqueueDequeue(){
 
 // Axiome 4
 void testQueueCommutativeEnDeQueue(){
-    printf("Axiome 4\nTesting commutative property of enqueue/dequeue");
+    printf("Axiome 4\nTesting commutative property of enqueue/dequeue on non-empty queue");
     // construct two identical empty queues: que1 and que2
     queue *que1 = queue_empty();
     queue_setMemHandler(que1, free);
@@ -113,6 +117,8 @@ void testQueueCommutativeEnDeQueue(){
 
     } else {
         printf("...fail\n\n");
+        queue_free(que1);
+        queue_free(que2);
         exit (1);
     }
 
@@ -133,6 +139,7 @@ void testQueueEnqueueFrontOnEmpty(){
         queue_free(que);
     } else {
         printf("...fail\n\n");
+        queue_free(que);
         exit (1);
     }
 
@@ -173,6 +180,8 @@ void testQueueEnqueueFrontOnNonEmpty(){
         queue_free(que2);
     } else {
         printf("...fail\n\n");
+        queue_free(que1);
+        queue_free(que2);
         exit (1);
     }
 }
