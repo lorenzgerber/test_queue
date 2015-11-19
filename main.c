@@ -1,6 +1,17 @@
-//
-// Created by Lorenz Gerber on 15/11/15.
-//
+/**
+* Unit Test for datatype queue
+* - the header of the datatype to be tested
+*   shall be mentioned as include below
+* - the unit tests follow the axiomatic specifications
+*   given in the book 'Datatyper och algoritmer'
+*   (Janlert and Wibert, 2000)
+* - the unit tests don't check for memory leaks
+*   due to wrong implemented memory handler
+*
+*
+* Created 2015-11-19 by Lorenz Gerber, dv15lgr@cs.umu.se
+* Licensed under GNU LGPL3
+**/
 
 #include <stdio.h>
 #include <stdlib.h>
