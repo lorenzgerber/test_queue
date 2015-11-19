@@ -10,9 +10,12 @@
 // Axiome 1
 void testForEmtpyQueue() {
     printf("Axiome 1\nTesting for empty queue...");
+
+    // make emtpy queue
     queue *que = queue_empty();
     queue_setMemHandler(que, free);
 
+    // test if queue empty
     if (queue_isEmpty(que)){
         printf("...pass\n\n");
         queue_free(que);
@@ -26,12 +29,17 @@ void testForEmtpyQueue() {
 // Axiome 2
 void testQueueNotEmptyOnEnque(){
     printf("Axiome 2\nTesting whether queue not empty after enqueue...");
+
+    // make empty queue
     queue *que = queue_empty();
     queue_setMemHandler(que, free);
 
+    // allocate memory and set a value
     int val = 10;
     int *value = malloc(sizeof(int));
     *value = val;
+
+    // enqueue and test if empty
     queue_enqueue(que, value);
     if ( !queue_isEmpty(que)){
         printf("...pass\n\n");
@@ -47,12 +55,17 @@ void testQueueNotEmptyOnEnque(){
 // Axiome 3
 void testQueueEmptyOnEnqueueDequeue(){
     printf("Axiome 3\nTesting whether empty queue is empty again after enqueue/dequeue");
+
+    // make emtpy queue
     queue *que = queue_empty();
     queue_setMemHandler(que, free);
 
+    // allocate memory and set value
     int val = 10;
     int *value = malloc(sizeof(int));
     *value = val;
+
+    // enqueue/dequeue and test if empty
     queue_enqueue (que, value);
     queue_dequeue (que);
     if ( queue_isEmpty(que)){
@@ -69,13 +82,15 @@ void testQueueEmptyOnEnqueueDequeue(){
 // Axiome 4
 void testQueueCommutativeEnDeQueue(){
     printf("Axiome 4\nTesting commutative property of enqueue/dequeue on non-empty queue");
+
     // construct two identical empty queues: que1 and que2
     queue *que1 = queue_empty();
     queue_setMemHandler(que1, free);
     queue *que2 = queue_empty();
     queue_setMemHandler(que2, free);
 
-    // define and assign initial value and test value
+    // define and assign two sets of
+    // initial value and test value
     int ini = 15;
     int val = 10;
     int *initial1 = malloc(sizeof(int)); //&ini;
@@ -91,14 +106,6 @@ void testQueueCommutativeEnDeQueue(){
     queue_enqueue(que1, initial1);
     queue_enqueue(que2, initial2);
 
-    // Check pre-condition, queue is not empty
-    //printf("Check pre-condition, queue NOT empty\n");
-    if(!queue_isEmpty(que1) && !queue_isEmpty(que2)){
-        //printf("...pass\n\n");
-    } else {
-        printf("...fail\n\n");
-        exit(1);
-    }
 
     // enqueue and dequeue que1 with test value
     queue_enqueue(que1, value1);
@@ -127,12 +134,18 @@ void testQueueCommutativeEnDeQueue(){
 // Axiome 5
 void testQueueEnqueueFrontOnEmpty(){
     printf("Axiome 5\nTesting Enqueue/Front on an empty Queue returns value");
+
+    // make emtpy queue
     queue *que = queue_empty();
     queue_setMemHandler(que, free);
 
+    // allocate memory and set value
     int val = 10;
     int *value = malloc(sizeof(int));
     *value = val;
+
+    // check enqueue/front returns the
+    // value
     queue_enqueue (que, value);
     if (*(int*) queue_front(que) == val){
         printf("...pass\n\n");
@@ -172,7 +185,8 @@ void testQueueEnqueueFrontOnNonEmpty(){
 
 
 
-    // actual test
+    // test enqueue/front on non-empty queue q returns the
+    // same as just front on q
     queue_enqueue(que1, value1);
     if ( *(int*) queue_front(que1) == *(int*) queue_front(que2)) {
         printf("...pass\n\n");
@@ -188,7 +202,6 @@ void testQueueEnqueueFrontOnNonEmpty(){
 
 
 int main (void){
-
     //testing data type queue
     testForEmtpyQueue();
     testQueueNotEmptyOnEnque();
@@ -196,5 +209,6 @@ int main (void){
     testQueueCommutativeEnDeQueue();
     testQueueEnqueueFrontOnEmpty();
     testQueueEnqueueFrontOnNonEmpty();
+    printf("All tests passed!\n");
     return 0;
 }

@@ -82,5 +82,5 @@ Kommentarer: Minne för ev värden i kön avallokeras bara om en funktion
              uppgift att avallokera minnet för alla värden i kön.
 */
 void queue_free(queue *q) {
-    list_free(q);
+    //list_free(q);
 }
