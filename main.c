@@ -10,6 +10,7 @@
 *
 *
 * Created 2015-11-19 by Lorenz Gerber, dv15lgr@cs.umu.se
+* Revised 2015-11-25
 * Licensed under GNU LGPL3
 **/
 
@@ -18,9 +19,12 @@
 #include "queue.h"
 #include "list_2cell.h"
 
-// Axiome 1
+// Test 1,  Applying isEmpty() on emtpy(). This tests partly
+// the isEmpty() and partly the empty() function
+// Succeeds when isEmpty() returns TRUE
+// Fails when isEmpty() returns FALSE
 void testForEmtpyQueue() {
-    printf("Axiome 1\nTesting for empty queue...");
+    printf("Test 1/6\nTesting for empty queue...");
 
     // make emtpy queue
     queue *que = queue_empty();
@@ -37,9 +41,12 @@ void testForEmtpyQueue() {
     }
 }
 
-// Axiome 2
+// Test 2, applying enqueue() on empty() and test
+// with isEmpty()
+// Succeeds when isEmpty returns FALSE
+// Fails when isEmpty returns TRUE
 void testQueueNotEmptyOnEnque(){
-    printf("Axiome 2\nTesting whether queue not empty after enqueue...");
+    printf("Test 2/6\nTesting whether queue not empty after enqueue...");
 
     // make empty queue
     queue *que = queue_empty();
@@ -63,9 +70,12 @@ void testQueueNotEmptyOnEnque(){
     }
 }
 
-// Axiome 3
+// Test 3, applying enqueue(dequeue(empty())) and check for
+// isEmpty()
+// Succeeds when isEmpty returns TRUE
+// Fails when isEmpty returns FALSE
 void testQueueEmptyOnEnqueueDequeue(){
-    printf("Axiome 3\nTesting whether empty queue is empty again after enqueue/dequeue");
+    printf("Test 3/6\nTesting whether empty queue is empty again after enqueue/dequeue");
 
     // make emtpy queue
     queue *que = queue_empty();
@@ -90,9 +100,12 @@ void testQueueEmptyOnEnqueueDequeue(){
 }
 
 
-// Axiome 4
+// Test 4, check the equality front(enqueue(dequeue(queue)) ==
+// front(dequeue(enqueue(queue)) where queue is a non-emtpy queue.
+// succeeds when equality is TRUE
+// fails when the equality is FALSE
 void testQueueCommutativeEnDeQueue(){
-    printf("Axiome 4\nTesting commutative property of enqueue/dequeue on non-empty queue");
+    printf("Test 4/6\nTesting commutative property of enqueue/dequeue on non-empty queue");
 
     // construct two identical empty queues: que1 and que2
     queue *que1 = queue_empty();
@@ -126,6 +139,15 @@ void testQueueCommutativeEnDeQueue(){
     queue_dequeue(que2);
     queue_enqueue(que2, value2);
 
+    // pre-check, que1/que2 must not be empty
+    // otherwise front() will result in a seg fault
+    if(queue_isEmpty(que1) || queue_isEmpty(que2)){
+        printf("...fail\n\n");
+        queue_free(que1);
+        queue_free(que2);
+        exit(1);
+    }
+
     // check the commutative property of enqueue and dequeue
     // by comparing the front value of que1 and que2
     if (*(int*) queue_front(que1) == *(int*) queue_front(que2)){
@@ -142,9 +164,11 @@ void testQueueCommutativeEnDeQueue(){
 
 }
 
-// Axiome 5
+// Test 5 check the equality front(enqueue(val, empty()))==val
+// succeeds when equality is TRUE
+// fails when the equality is FALSE
 void testQueueEnqueueFrontOnEmpty(){
-    printf("Axiome 5\nTesting Enqueue/Front on an empty Queue returns value");
+    printf("Test 5/6\nTesting Enqueue/Front on an empty Queue returns value");
 
     // make emtpy queue
     queue *que = queue_empty();
@@ -169,9 +193,12 @@ void testQueueEnqueueFrontOnEmpty(){
 
 }
 
-// Axiome 6
+// Test 6, check equality of the expression
+// front(enqueue(val, non-empty queue) == front(non-empty queue)
+// succeeds when the equality is TRUE
+// fails when the equality is FALSE
 void testQueueEnqueueFrontOnNonEmpty(){
-    printf("Axiome 6\nTesting Enqueue/Front on non-empty Queue is equal Front on queue");
+    printf("Test 6/6\nTesting Enqueue/Front on non-empty Queue is equal Front on queue");
 
     // construct two identical empty queues: que1 and que2
     queue *que1 = queue_empty();
@@ -211,7 +238,8 @@ void testQueueEnqueueFrontOnNonEmpty(){
     }
 }
 
-
+// Main unit testprogram, calls 6 tests in sequence. If a test fails
+// main is terminated (exit(1)).
 int main (void){
     //testing data type queue
     testForEmtpyQueue();
