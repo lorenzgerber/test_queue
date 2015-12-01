@@ -61,7 +61,9 @@ Parametrar: q - Kön (queue *)
 Kommentarer:
 */
 void queue_enqueue(queue *q,data d) {
-    list_insert(q,d,list_end(q));
+    if(queue_isEmpty(q)) {
+        list_insert(q, d, list_end(q));
+    }
 }
 
 /*
